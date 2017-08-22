@@ -1,0 +1,105 @@
+<!DOCTYPE>
+<html>
+<head>
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+        import Vuetable from './components/Vuetable'
+        export default {
+            name: 'app',
+            components: {
+                MyVuetable
+            }
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/vue/1.0.28/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/vue.resource/1.0.3/vue-resource.min.js"></script>
+    
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/vue.table/1.5.3/vue-table.min.js"></script>
+    
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/vue.table/1.5.3/vue-table.js"></script>
+   
+</head>
+<body>
+<div id="vue">
+    <div v-if="seen">
+        <p>Enter your course here!</p>
+    </div>
+    <div v-for="(course, i) in courses">
+        <input type="text" v-model="course.name" @keyup.enter="add(i)" placeholder="CPSC110"/>
+        <button @click="remove(i)">X</button>
+    </div>
+
+    <button @click="add">ADD COURSE</button>
+    <ol>
+        <li v-for="course in courses"> {{course.name}} </li>
+    </ol>
+</div>
+<script src="myapp.js"></script>
+
+<div>
+    <table style="width:100%">
+        <tr>
+          <th>   </th>
+          <th>Sun</th>  
+          <th>Mon</th>
+          <th>Tues</th>
+          <th>Weds</th>
+          <th>Thur</th>
+          <th>Fri</th>
+          <th>Sat</th>
+        </tr>
+
+        <div>
+           <tr>
+               <th>09:00</th>
+           </tr>
+        </div>
+        <div>
+                <tr>
+                    <th>10:00</th>
+                </tr>
+        </div>
+        <div>
+                <tr>
+                    <th>11:00</th>
+                </tr>
+        </div>
+        <div>
+                <tr>
+                    <th>12:00</th>
+                </tr>
+        </div>
+        <div>
+                <tr>
+                    <th>13:00</th>
+                </tr>
+        </div>
+        <div>
+                <tr>
+                    <th>14:00</th>
+                </tr>
+        </div>
+        <div>
+                <tr>
+                    <th>15:00</th>
+                </tr>
+        </div>
+        <div>
+                <tr>
+                    <th>16:00</th>
+                </tr>
+        </div>
+
+        
+
+    </table>
+</div>
+
+<template>
+        <vuetable ref="vuetable"
+          api-url="https://vuetable.ratiw.net/api/users"
+          :fields="['name', 'email', 'birthdate']"
+        ></vuetable>
+      </template>
+</body>
+</html>
