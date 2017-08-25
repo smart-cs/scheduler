@@ -1,105 +1,150 @@
 <!DOCTYPE>
 <html>
 <head>
+    <script src="https://code.jquery.com/jquery-3.1.0.slim.min.js"></script>
     <script src="https://unpkg.com/vue"></script>
-    <script>
-        import Vuetable from './components/Vuetable'
-        export default {
-            name: 'app',
-            components: {
-                MyVuetable
-            }
-        }
-    </script>
-    <script src="https://cdn.jsdelivr.net/vue/1.0.28/vue.js"></script>
-    <script src="https://cdn.jsdelivr.net/vue.resource/1.0.3/vue-resource.min.js"></script>
-    
-    <script type="text/javascript" src="http://cdn.jsdelivr.net/vue.table/1.5.3/vue-table.min.js"></script>
-    
-    <script type="text/javascript" src="http://cdn.jsdelivr.net/vue.table/1.5.3/vue-table.js"></script>
+
+    <link rel="stylesheet" href="schedule-template/css/reset.css"> <!-- CSS reset -->
+    <link rel="stylesheet" href="schedule-template/css/style.css"> <!-- Resource style -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet">
+
+    <link rel="stylesheet" href="mystyle.css"> <!-- mystyle -->
    
+    
 </head>
 <body>
+
 <div id="vue">
     <div v-if="seen">
-        <p>Enter your course here!</p>
+        <p class="text">Enter your course here!</p>
     </div>
     <div v-for="(course, i) in courses">
-        <input type="text" v-model="course.name" @keyup.enter="add(i)" placeholder="CPSC110"/>
-        <button @click="remove(i)">X</button>
-    </div>
+        <button class="add-course-button" @click="add">+</button> 
+        <input type="text" class="input-field" v-model="course.name" @keyup.enter="add(i)" @keyup.delete="backspace(i)" placeholder="CPSC110"/>
 
-    <button @click="add">ADD COURSE</button>
+        <button class="x-button" @click="remove(i)">X</button>
+    </div>
+    <button class="generate-schedule">GENERATE SCHEDULES</button>
     <ol>
+        <!-- list every course in courses !-->
         <li v-for="course in courses"> {{course.name}} </li>
     </ol>
+
+<div class="cd-schedule loading">
+	<div class="timeline">
+		<ul>
+            <li><span>08:00</span></li>
+            <li><span>08:30</span></li>
+			<li><span>09:00</span></li>
+			<li><span>09:30</span></li>
+			<li><span>10:00</span></li>
+			<li><span>10:30</span></li>
+			<li><span>11:00</span></li>
+			<li><span>11:30</span></li>
+			<li><span>12:00</span></li>
+			<li><span>12:30</span></li>
+			<li><span>13:00</span></li>
+			<li><span>13:30</span></li>
+			<li><span>14:00</span></li>
+			<li><span>14:30</span></li>
+			<li><span>15:00</span></li>
+			<li><span>15:30</span></li>
+			<li><span>16:00</span></li>
+			<li><span>16:30</span></li>
+			<li><span>17:00</span></li>
+			<li><span>17:30</span></li>
+			<li><span>18:00</span></li>
+		</ul>
+	</div> <!-- .timeline -->
+
+
+<div class="events">
+    <ul>
+        <!--<li class="events-group">
+            <div class="top-info"><span>Sun</span></div>
+            
+            <ul>
+                <course-component v-for="course in sun" :start="course.start" :end="course.end" :name="course.name"></course-component>
+            </ul>
+        </li>-->
+        <li class="events-group">
+            <div class="top-info"><span>Mon</span></div>
+            
+            <ul>
+                <course-component v-for="course in mon" :start="course.start" :end="course.end" :name="course.name"></course-component>
+            </ul>
+        </li>
+
+        <li class="events-group">
+            <div class="top-info"><span>Tues</span></div>
+
+            <ul>
+                <course-component v-for="course in tue" :start="course.start" :end="course.end" :name="course.name"></course-component>        
+            </ul>
+        </li>
+
+        <li class="events-group">
+            <div class="top-info"><span>Wed</span></div>
+
+            <ul>
+                <course-component v-for="course in wed" :start="course.start" :end="course.end" :name="course.name"></course-component> 
+            </ul>
+        </li>
+
+        <li class="events-group">
+            <div class="top-info"><span>Thur</span></div>
+
+            <ul>
+                <course-component v-for="course in thu" :start="course.start" :end="course.end" :name="course.name"></course-component> 
+            </ul>
+        </li>
+
+        <li class="events-group">
+            <div class="top-info"><span>Fri</span></div>
+
+            <ul>
+                <course-component v-for= "course in fri" :start="course.start" :end="course.end" :name="course.name" ></course-component>
+            </ul>
+        </li>
+        
+        <!-- Saturday attempt !-->
+        <!--<li class="events-group">
+            <div class="top-info"><span>Sat</span></div>
+            <ul>
+                <course-component v-for= "course in sat" :start="course.start" :end="course.end" :name="course.name" ></course-component>
+            </ul>
+        </li>-->
+        
+    </ul>
 </div>
+
+<div class="event-modal">
+    <header class="header">
+        <div class="content">
+            <span class="event-date"></span>
+            <h3 class="event-name"></h3>
+        </div>
+
+        <div class="header-bg"></div>
+    </header>
+
+    <div class="body">
+        <div class="event-info"></div>
+        <div class="body-bg"></div>
+    </div>
+
+    <a href="#0" class="close">Close</a>
+</div>
+
+</div> <!-- #vue -->
+
+<div class="cover-layer"></div>
+</div> <!-- .cd-schedule -->
+<script src="schedule-template/js/modernizr.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script> -->
+<script src="schedule-template/js/main.js"></script> <!-- Resource jQuery -->
+
 <script src="myapp.js"></script>
 
-<div>
-    <table style="width:100%">
-        <tr>
-          <th>   </th>
-          <th>Sun</th>  
-          <th>Mon</th>
-          <th>Tues</th>
-          <th>Weds</th>
-          <th>Thur</th>
-          <th>Fri</th>
-          <th>Sat</th>
-        </tr>
-
-        <div>
-           <tr>
-               <th>09:00</th>
-           </tr>
-        </div>
-        <div>
-                <tr>
-                    <th>10:00</th>
-                </tr>
-        </div>
-        <div>
-                <tr>
-                    <th>11:00</th>
-                </tr>
-        </div>
-        <div>
-                <tr>
-                    <th>12:00</th>
-                </tr>
-        </div>
-        <div>
-                <tr>
-                    <th>13:00</th>
-                </tr>
-        </div>
-        <div>
-                <tr>
-                    <th>14:00</th>
-                </tr>
-        </div>
-        <div>
-                <tr>
-                    <th>15:00</th>
-                </tr>
-        </div>
-        <div>
-                <tr>
-                    <th>16:00</th>
-                </tr>
-        </div>
-
-        
-
-    </table>
-</div>
-
-<template>
-        <vuetable ref="vuetable"
-          api-url="https://vuetable.ratiw.net/api/users"
-          :fields="['name', 'email', 'birthdate']"
-        ></vuetable>
-      </template>
 </body>
 </html>

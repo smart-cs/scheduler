@@ -1,0 +1,48 @@
+
+
+body {
+    font-family: calibri;
+    text-align: center;
+}
+.text {
+    font-size: 300%;
+    color: red;
+    text-align:center;
+}
+
+.add-course-button {
+    height: 2.5%;
+    width: 2.5%;
+    font-size: 100%;
+    background: pink;
+    border: none;
+    border-radius: 20%;
+    text-align: center;
+    margin-top: 2%;
+    
+}
+
+.x-button {
+    height: 2.5%;
+    width: 2.5%;
+    background: pink;
+    border: none;
+    border-radius: 20%;
+}
+
+.input-field {
+    height: 3%;
+    width: 20%;
+    margin-top: 2%;
+}
+
+.generate-schedule {
+    height: 4%;
+    width: 200;
+    font-size: 100%;
+    background: pink;
+    border: none;
+    border-radius: 10%;
+    text-align: center;
+    margin-top: 2%;
+}
