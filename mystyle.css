@@ -6,7 +6,7 @@ body {
 }
 .title {
     font-size: 300%;
-    color: red;
+    color: black;
     text-align:center;
     margin-top: 40px;
 }
@@ -26,41 +26,50 @@ body {
     background: #5c00e6;
     position: relative;
 }
+
+.button {
+    background: #16ace2;
+    color: white;
+}
 .add-course-button {
-    height: 2.5%;
+    height: 4%;
     width: 2.5%;
     font-size: 100%;
-    background: pink;
+    font-weight: bold;
     border: none;
-    border-radius: 20%;
     text-align: center;
     margin-top: 2%;
+    margin-right: 0.3%;
     
 }
 
 .x-button {
-    height: 2.5%;
-    width: 2.5%;
-    background: pink;
+    height: 3%;
+    width: 2%;
     border: none;
     border-radius: 20%;
+    color: grey;
+    font-size: 120%;
+    margin-left: -0.5%;
+    background: none;
     text-align: center;
+    
 }
 
 .input-field {
-    height: 3%;
-    width: 20%;
+    height: 4%;
+    width: 12%;
     margin-top: 2%;
-    text-align: center;
+    font-size:100%;
+    padding-left: 1%;
 }
 
 .generate-schedule {
     height: 4%;
     width: 200;
     font-size: 100%;
-    background: pink;
+    font-weight: bold;
     border: none;
-    border-radius: 10%;
     text-align: center;
     margin-top: 2%;
 }

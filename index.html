@@ -21,15 +21,15 @@
 <div id="vue">
     <div class="center">
         <div v-if="seen">
-            <p class="title">Enter your course here!</p>
+            <p class="title">Enter your courses here</p>
         </div>
         <div v-for="(course, i) in courses">
-            <button class="add-course-button" @click="add">+</button> 
+            <button class="add-course-button button" @click="add">+</button> 
             <input type="text" class="input-field" v-model="course.name" @keyup.enter="add(i)" @keyup.delete="backspace(i)" placeholder="CPSC110"/>
 
-            <button class="x-button" @click="remove(i)">X</button>
+            <button class="x-button" @click="remove(i)">x</button>
         </div>
-        <button class="generate-schedule" @click="generateCourses">GENERATE SCHEDULES</button>
+        <button class="generate-schedule" @click="generateCourses">Generate</button>
     </div>
     <ol>
         <!-- list every course in courses !-->
