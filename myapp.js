@@ -138,6 +138,35 @@ var vue = new Vue({
       backspace: function(index) {
         if (course.name=='')
           this.courses.splice(index, 1);
+      },
+      generateSchedule: function() {
+        var PROXY = "https://cors-anywhere.herokuapp.com/";
+        var BASE_API = "phzi353gq7.execute-api.us-west-2.amazonaws.com/test/returnSchedule";
+
+        var params = "?courses=" + this.courses.map(function(c) {
+          return c.name;
+        }).join(" ");
+        var destUrl = PROXY + BASE_API + params;
+
+        $.ajax({
+          type: "GET",
+          url: destUrl,
+          contentType: "application/x-www-form-urlencoded",
+          success: function(response) {
+            // response is an array of schedules
+            // TODO: need to hold an array of schedules
+            var schedule = reformat(response[0]);
+            console.log(schedule);
+            //for (var i=0; i < schedule.length; i++) {
+            //  vue.days[i].splice(i, 1, schedule[i]);
+            //}
+          },
+          error: function(request, textStatus, errorThrown) {
+            console.log(request);
+            console.log(textStatus);
+            console.log(errorThrown);
+          }
+        });
       }
     }
   })
