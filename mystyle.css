@@ -2,14 +2,30 @@
 
 body {
     font-family: calibri;
-    text-align: center;
+   
 }
-.text {
+.title {
     font-size: 300%;
     color: red;
     text-align:center;
+    margin-top: 40px;
 }
 
+.center {
+    text-align: center;
+}
+.header {
+    font-size: 100px;
+    color: white;
+    position: absolute;
+    text-align: center;
+}
+#rectangle {
+    width: 2000px;
+    height: 130px;
+    background: #5c00e6;
+    position: relative;
+}
 .add-course-button {
     height: 2.5%;
     width: 2.5%;
@@ -28,12 +44,14 @@ body {
     background: pink;
     border: none;
     border-radius: 20%;
+    text-align: center;
 }
 
 .input-field {
     height: 3%;
     width: 20%;
     margin-top: 2%;
+    text-align: center;
 }
 
 .generate-schedule {
@@ -45,4 +63,8 @@ body {
     border-radius: 10%;
     text-align: center;
     margin-top: 2%;
+}
+
+.schedule {
+    border: none;
 }

@@ -63,6 +63,7 @@ Main Components
   .cd-schedule .timeline {
     display: block;
     position: absolute;
+   /* position: absolute;*/
     top: 0;
     left: 0;
     height: 100%;
@@ -70,6 +71,7 @@ Main Components
     padding-top: 50px;
   }
   .cd-schedule .timeline li {
+    /* height of the boxes */
     position: relative;
     height: 50px;
   }
@@ -102,6 +104,7 @@ Main Components
         -ms-transform: translateY(-50%);
             transform: translateY(-50%);
   }
+  /* displays every OTHER (hence 2n) time */
   .cd-schedule .timeline li:nth-of-type(2n) span {
     display: none;
   }

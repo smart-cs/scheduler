@@ -136,7 +136,7 @@ var vue = new Vue({
           this.courses.splice(index, 1);
       },
       backspace: function(index) {
-        if (course.name=="")
+        if (course.name=='')
           this.courses.splice(index, 1);
       }
     }
