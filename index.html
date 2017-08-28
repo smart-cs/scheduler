@@ -19,21 +19,24 @@
 
 <p id="rectangle" class="header">Course Scheduler<p>
 <div id="vue">
-    <div class="center">
+    <div class="input-courses">
         <div v-if="seen">
-            <p class="title">Enter your courses here</p>
+            <span></span><p class="title">Enter your courses here</p> <class="title">Choose your filters</span>
         </div>
-        <div v-for="(course, i) in courses">
-            <button class="add-course-button button" @click="add">+</button> 
-            <input type="text" class="input-field" v-model="course.name" @keyup.enter="add(i)" @keyup.delete="backspace(i)" placeholder="CPSC110"/>
 
-            <button class="x-button" @click="remove(i)">x</button>
+        <div class="input-fields">
+            <div v-for="(course, i) in courses">
+                <button class="add-course-button button" @click="add">+</button> 
+                <input type="text" class="input-field" v-model="course.name" @keyup.enter="add(i)" @keyup.delete="backspace(course.name, i)" placeholder="CPSC110"/>
+
+                <button class="x-button" @click="remove(i)">x</button>
+            </div>
+            <button class="generate-schedule button" @click="generateSchedule()">Generate</button>
         </div>
-        <button class="generate-schedule button" @click="generateSchedule()">Generate</button>
     </div>
     <ol>
         <!-- list every course in courses !-->
-        <li v-for="course in courses"> {{course.name}} </li>
+        <!-- <li v-for="course in courses"> {{course.name}} </li> !-->
     </ol>
 
 <div class="schedule">

@@ -77,10 +77,11 @@ function dayStringToIndex(day) {
   }
 }
 
+/*
 function backspace() {
 
 }
-
+*/
 
 var days = reformat(urSched);
 console.log(days);
@@ -129,15 +130,18 @@ var vue = new Vue({
     methods: {
         add: function(index) {
           //this.courses.push({name : ''});
-          if (this.courses.length != MAX_COURSES)
+          if (this.courses.length != MAX_COURSES) {
             this.courses.splice(index+1, 0, {name: ''});
+            //document.getElementById('first-field').nextSibling.focus();
+          }
       },
       remove: function(index) {
+        if (this.courses.length > 1)
           this.courses.splice(index, 1);
       },
-      backspace: function(index) {
-        if (course.name=='')
-          this.courses.splice(index, 1);
+      backspace: function(coursename, index) {
+        if (coursename=='')
+          this.remove(index);
       },
       generateSchedule: function() {
         var PROXY = "https://cors-anywhere.herokuapp.com/";
