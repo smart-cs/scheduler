@@ -1,4 +1,6 @@
-jQuery(document).ready(function($){
+var schedule_template = {};
+
+schedule_template.makeSchedule = function makeSchedule($) {
 	var transitionEnd = 'webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend';
 	var transitionsSupported = ( $('.csstransitions').length > 0 );
 	//if browser does not support transitions - use a different event to trigger them
@@ -378,4 +380,4 @@ jQuery(document).ready(function($){
 			'transform': value
 		});
 	}
-});
+}
