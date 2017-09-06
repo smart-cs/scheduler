@@ -44,6 +44,7 @@ body {
     text-align: center;
     margin-top: 2%;
     margin-right: 0.3%;
+    outline: none;
     
 }
 
@@ -57,6 +58,7 @@ body {
     margin-left: -0.5%;
     background: none;
     text-align: center;
+    outline: none;
     
 }
 
@@ -66,6 +68,7 @@ body {
     margin-top: 2%;
     font-size:100%;
     padding-left: 1%;
+    outline: none;
 }
 
 .generate-schedule {
@@ -76,6 +79,7 @@ body {
     border: none;
     text-align: center;
     margin-top: 2%;
+    outline: none;
 }
 
 .schedule {
