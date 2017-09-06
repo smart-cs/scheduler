@@ -33,7 +33,13 @@
     </div>
 
     <div>
-    <schedule-component :mon="mon" :tue="tue" :wed="wed" :thu="thu" :fri="fri"></schedule-component> 
+    <schedule-component v-for="schedule in schedules" 
+        :mon="schedule[1]"
+        :tue="schedule[2]"
+        :wed="schedule[3]"
+        :thu="schedule[4]"
+        :fri="schedule[5]">
+    </schedule-component> 
     </div>
 
     <div class="cover-layer"></div>
