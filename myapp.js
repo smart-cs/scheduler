@@ -1,11 +1,5 @@
 const MAX_COURSES = 20;
 
-
-var mySched = [{'MICB 201 101': 
-  [{'term': '1', 'day': 'Tue', 'start': '8:00', 'end': '9:30'}, 
-    {'term': '1', 'day': 'Thu', 'start': '8:00', 'end': '9:30'}]
-  }];
-
 Vue.component('course-component', {
   props: [
     'start', 'end', 'name'
@@ -16,6 +10,107 @@ Vue.component('course-component', {
         <em class="event-name">{{name}}</em>
       </a>
     </li>`
+})
+
+Vue.component('schedule-component', {
+  props: [
+    "sun", "mon", "tue", "wed", "thu", "fri", "sat"
+  ],
+  template: `
+  <div class="schedule">
+      <div class="cd-schedule loading">
+          <div class="timeline">
+              <ul>
+                  <li><span>08:00</span></li>
+                  <li><span>08:30</span></li>
+                  <li><span>09:00</span></li>
+                  <li><span>09:30</span></li>
+                  <li><span>10:00</span></li>
+                  <li><span>10:30</span></li>
+                  <li><span>11:00</span></li>
+                  <li><span>11:30</span></li>
+                  <li><span>12:00</span></li>
+                  <li><span>12:30</span></li>
+                  <li><span>13:00</span></li>
+                  <li><span>13:30</span></li>
+                  <li><span>14:00</span></li>
+                  <li><span>14:30</span></li>
+                  <li><span>15:00</span></li>
+                  <li><span>15:30</span></li>
+                  <li><span>16:00</span></li>
+                  <li><span>16:30</span></li>
+                  <li><span>17:00</span></li>
+              </ul>
+          </div> 
+
+
+      <div class="events">
+          <ul>
+              <li class="events-group">
+                  <div class="top-info"><span>Mon</span></div>
+                  
+                  <ul>
+                      <course-component v-for="course in  mon" :start="course.start" :end="course.end" :name="course.name"></course-component>
+                  </ul>
+              </li>
+
+              <li class="events-group">
+                  <div class="top-info"><span>Tues</span></div>
+
+                  <ul>
+                      <course-component v-for="course in tue" :start="course.start" :end="course.end" :name="course.name"></course-component>        
+                  </ul>
+              </li>
+
+              <li class="events-group">
+                  <div class="top-info"><span>Wed</span></div>
+
+                  <ul>
+                      <course-component v-for="course in wed" :start="course.start" :end="course.end" :name="course.name"></course-component> 
+                  </ul>
+              </li>
+
+              <li class="events-group">
+                  <div class="top-info"><span>Thur</span></div>
+
+                  <ul>
+                      <course-component v-for="course in thu" :start="course.start" :end="course.end" :name="course.name"></course-component> 
+                  </ul>
+              </li>
+
+              <li class="events-group">
+                  <div class="top-info"><span>Fri</span></div>
+
+                  <ul>
+                      <course-component v-for= "course in fri" :start="course.start" :end="course.end" :name="course.name" ></course-component>
+                  </ul>
+              </li>
+              
+          </ul>
+      </div>
+
+
+      <div class="event-modal">
+          <header class="header">
+              <div class="content">
+                  <span class="event-date"></span>
+                  <h3 class="event-name"></h3>
+              </div>
+
+              <div class="header-bg"></div>
+          </header>
+
+          <div class="body">
+              <div class="event-info"></div>
+              <div class="body-bg"></div>
+          </div>
+
+          <a href="#0" class="close">Close</a>
+      </div>
+
+      
+      </div> 
+    </div>`
 })
 
 const urSched = [
@@ -35,7 +130,6 @@ const urSched = [
   }
 ];
 
-//
 function reformat(sched) {
   var days = [[],[],[],[],[],[],[]];
   for (var i=0; i < sched.length; i++) {
@@ -77,14 +171,7 @@ function dayStringToIndex(day) {
   }
 }
 
-/*
-function backspace() {
-
-}
-*/
-
 var days = reformat(urSched);
-console.log(days);
 //var days = [[],[],[],[],[],[],[]];
 //var days = [[], [{name: "MICB 201 101", start: "8:00", end: "9:30"}, {name: "MICB 201 101", start: "11:00", end: "12:00"}], [],  [], [{name: "MICB 201 101", start: "8:00", end: "9:30"}], [], []]
 
@@ -93,96 +180,92 @@ console.log(days);
 //const exampleReformat = reformat(exampleSch);
 
 const exampleMon = [
-    {name: "BIOL112", start: "8:00", end: "9:00"}, 
-    {name: "CHEM121", start: "13:00", end: "14:00"}
+  {name: "BIOL112", start: "8:00", end: "9:00"}, 
+  {name: "CHEM121", start: "13:00", end: "14:00"}
 ]
 
 var vue = new Vue({
-    el: '#vue',
-    data: { 
-      seen: true,
-      courses: [{name : ''}],
-      days: days,
-      //mon:[{name: "BIOL112", start: "8:00", end: "9:00"}, {name: "CHEM121", start: "13:00", end: "14:00"}],
-      //fri:[{name: "CPSC210", start:"15:00", end: "16:00"}],
-      message: 'ewrwer'
+  el: '#vue',
+  data: { 
+    seen: true,
+    courses: [{name : ''}],
+    days: days,
+    //mon:[{name: "BIOL112", start: "8:00", end: "9:00"}, {name: "CHEM121", start: "13:00", end: "14:00"}],
+    //fri:[{name: "CPSC210", start:"15:00", end: "16:00"}],
+    message: 'ewrwer'
+  },
+  computed: {
+    sun: function() {
+      return this.days[0];
     },
-    computed: {
-      sun: function() {
-        return this.days[0];
-      },
-      mon: function() {
-        return this.days[1];
-      },
-      tue: function() {
-        return this.days[2];
-      },
-      wed: function() {
-        return this.days[3];
-      },
-      thu: function() {
-        return this.days[4];
-      },
-      fri: function() {
-        return this.days[5];
-      },
-      sat: function() {
-        return this.days[6];
-      }
+    mon: function() {
+      return this.days[1];
     },
-    methods: {
-        add: function(index) {
-          //this.courses.push({name : ''});
-          if (this.courses.length != MAX_COURSES) {
-            this.courses.splice(index+1, 0, {name: ''});
-            //document.getElementById('first-field').nextSibling.focus();
-          }
-      },
-      remove: function(index) {
-        if (this.courses.length > 1)
-          this.courses.splice(index, 1);
-      },
-      backspace: function(coursename, index) {
-        if (coursename=='')
-          this.remove(index);
-      },
-      generateSchedule: function() {
-        var PROXY = "https://cors-anywhere.herokuapp.com/";
-        var BASE_API = "phzi353gq7.execute-api.us-west-2.amazonaws.com/test";
-        var RETURN_SCHEDULE = "/returnSchedule";
-        var PARAMS = "?courses=" + this.courses.map(function(c) {return c.name;}).join(",");
-        var destUrl = PROXY + BASE_API + RETURN_SCHEDULE + PARAMS;
-
-        console.log("Sending GET to " + destUrl);
-        $.ajax({
-          type: "GET",
-          url: destUrl,
-          success: function(response) {
-            // response is an array of schedules
-            // TODO: need to hold an array of schedules
-            vue.days = reformat(response[0]);
-
-            // need vue.days to render first before we call makeSchedule
-            // TODO: find out if there's a better way to do this
-            $(function() {
-              setTimeout(function(){
-                schedule_template.makeSchedule($);
-              }, 1000)
-            })
-          },
-          error: function(request, textStatus, errorThrown) {
-            console.log(request);
-            console.log(textStatus);
-            console.log(errorThrown);
-          }
-        });
-      }
+    tue: function() {
+      return this.days[2];
     },
-    mounted: function() {
-      schedule_template.makeSchedule(jQuery);
+    wed: function() {
+      return this.days[3];
+    },
+    thu: function() {
+      return this.days[4];
+    },
+    fri: function() {
+      return this.days[5];
+    },
+    sat: function() {
+      return this.days[6];
     }
-  })
+  },
+  methods: {
+    add: function(index) {
+      //this.courses.push({name : ''});
+      if (this.courses.length != MAX_COURSES) {
+        this.courses.splice(index+1, 0, {name: ''});
+        //document.getElementById('first-field').nextSibling.focus();
+      }
+    },
+    remove: function(index) {
+      if (this.courses.length > 1)
+        this.courses.splice(index, 1);
+    },
+    backspace: function(coursename, index) {
+      if (coursename=='')
+        this.remove(index);
+    },
+    generateSchedule: function() {
+      var PROXY = "https://cors-anywhere.herokuapp.com/";
+      var BASE_API = "phzi353gq7.execute-api.us-west-2.amazonaws.com/test";
+      var RETURN_SCHEDULE = "/returnSchedule";
+      var PARAMS = "?courses=" + this.courses.map(function(c) {return c.name;}).join(",");
+      var destUrl = PROXY + BASE_API + RETURN_SCHEDULE + PARAMS;
 
-
-
- 
+      console.log("Sending GET to " + destUrl);
+      $.ajax({
+        type: "GET",
+        url: destUrl,
+        success: function(response) {
+          // response is an array of schedules
+          // TODO: need to hold an array of schedules
+          vue.days = reformat(response[0]);
+          console.log(vue.days);
+          // need vue.days to render first before we call makeSchedule
+          // TODO: find out if there's a better way to do this
+          $(function() {
+            setTimeout(function(){
+              schedule_template.makeSchedule($);
+            }, 1000)
+          })
+        },
+        error: function(request, textStatus, errorThrown) {
+          console.log(request);
+          console.log(textStatus);
+          console.log(errorThrown);
+        }
+      });
+    }
+  },
+  mounted: function() {
+    schedule_template.makeSchedule(jQuery);
+  }
+});

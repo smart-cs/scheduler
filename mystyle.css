@@ -6,6 +6,10 @@ body {
     font-size: 300%;
     color: black;
     margin-top: 40px;
+    display: inline-block;
+}
+.filters {
+    margin-left: 30%;
 }
 .input-courses {
     padding-left: 5%;

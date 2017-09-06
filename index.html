@@ -11,17 +11,14 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet">
 
     <link rel="stylesheet" href="mystyle.css"> <!-- mystyle --> 
-   
-    
 </head>
 <body>
-
-
-<p id="rectangle" class="header">Course Scheduler<p>
 <div id="vue">
+    <p id="rectangle" class="header">Course Scheduler<p>
     <div class="input-courses">
         <div v-if="seen">
-            <span></span><p class="title">Enter your courses here</p> <class="title">Choose your filters</span>
+            <div class="title">Enter your courses here</div>
+            <div class="title filters">Choose your filters</div>
         </div>
 
         <div class="input-fields">
@@ -34,241 +31,16 @@
             <button class="generate-schedule button" @click="generateSchedule()">Generate</button>
         </div>
     </div>
-    <ol>
-        <!-- list every course in courses !-->
-        <!-- <li v-for="course in courses"> {{course.name}} </li> !-->
-    </ol>
 
-<div class="schedule">
-    <div class="cd-schedule loading">
-        <div class="timeline">
-            <ul>
-                <li><span>08:00</span></li>
-                <li><span>08:30</span></li>
-                <li><span>09:00</span></li>
-                <li><span>09:30</span></li>
-                <li><span>10:00</span></li>
-                <li><span>10:30</span></li>
-                <li><span>11:00</span></li>
-                <li><span>11:30</span></li>
-                <li><span>12:00</span></li>
-                <li><span>12:30</span></li>
-                <li><span>13:00</span></li>
-                <li><span>13:30</span></li>
-                <li><span>14:00</span></li>
-                <li><span>14:30</span></li>
-                <li><span>15:00</span></li>
-                <li><span>15:30</span></li>
-                <li><span>16:00</span></li>
-                <li><span>16:30</span></li>
-                <li><span>17:00</span></li>
-             <!-- <li><span>17:30</span></li> !-->
-             <!-- <li><span>18:00</span></li> !-->
-            </ul>
-        </div> <!-- .timeline -->
-
-
-    <div class="events">
-        <ul>
-            <!--<li class="events-group">
-                <div class="top-info"><span>Sun</span></div>
-                
-                <ul>
-                    <course-component v-for="course in sun" :start="course.start" :end="course.end" :name="course.name"></course-component>
-                </ul>
-            </li>-->
-            <li class="events-group">
-                <div class="top-info"><span>Mon</span></div>
-                
-                <ul>
-                    <course-component v-for="course in mon" :start="course.start" :end="course.end" :name="course.name"></course-component>
-                </ul>
-            </li>
-
-            <li class="events-group">
-                <div class="top-info"><span>Tues</span></div>
-
-                <ul>
-                    <course-component v-for="course in tue" :start="course.start" :end="course.end" :name="course.name"></course-component>        
-                </ul>
-            </li>
-
-            <li class="events-group">
-                <div class="top-info"><span>Wed</span></div>
-
-                <ul>
-                    <course-component v-for="course in wed" :start="course.start" :end="course.end" :name="course.name"></course-component> 
-                </ul>
-            </li>
-
-            <li class="events-group">
-                <div class="top-info"><span>Thur</span></div>
-
-                <ul>
-                    <course-component v-for="course in thu" :start="course.start" :end="course.end" :name="course.name"></course-component> 
-                </ul>
-            </li>
-
-            <li class="events-group">
-                <div class="top-info"><span>Fri</span></div>
-
-                <ul>
-                    <course-component v-for= "course in fri" :start="course.start" :end="course.end" :name="course.name" ></course-component>
-                </ul>
-            </li>
-            
-            <!-- Saturday attempt !-->
-            <!--<li class="events-group">
-                <div class="top-info"><span>Sat</span></div>
-                <ul>
-                    <course-component v-for= "course in sat" :start="course.start" :end="course.end" :name="course.name" ></course-component>
-                </ul>
-            </li>-->
-            
-        </ul>
+    <div>
+    <schedule-component :mon="mon" :tue="tue" :wed="wed" :thu="thu" :fri="fri"></schedule-component> 
     </div>
 
-
-    <div class="event-modal">
-        <header class="header">
-            <div class="content">
-                <span class="event-date"></span>
-                <h3 class="event-name"></h3>
-            </div>
-
-            <div class="header-bg"></div>
-        </header>
-
-        <div class="body">
-            <div class="event-info"></div>
-            <div class="body-bg"></div>
-        </div>
-
-        <a href="#0" class="close">Close</a>
-    </div>
-
-
-    </div> <!--.cd-schedule-->
-</div> <!-- .schedule -->
-
-<div class="schedule">
-    <div class="cd-schedule loading">
-        <div class="timeline">
-            <ul>
-                <li><span>08:00</span></li>
-                <li><span>08:30</span></li>
-                <li><span>09:00</span></li>
-                <li><span>09:30</span></li>
-                <li><span>10:00</span></li>
-                <li><span>10:30</span></li>
-                <li><span>11:00</span></li>
-                <li><span>11:30</span></li>
-                <li><span>12:00</span></li>
-                <li><span>12:30</span></li>
-                <li><span>13:00</span></li>
-                <li><span>13:30</span></li>
-                <li><span>14:00</span></li>
-                <li><span>14:30</span></li>
-                <li><span>15:00</span></li>
-                <li><span>15:30</span></li>
-                <li><span>16:00</span></li>
-                <li><span>16:30</span></li>
-                <li><span>17:00</span></li>
-               <!-- <li><span>17:30</span></li> !-->
-               <!-- <li><span>18:00</span></li> !-->
-            </ul>
-        </div> <!-- .timeline -->
-
-
-    <div class="events">
-        <ul>
-            <!--<li class="events-group">
-                <div class="top-info"><span>Sun</span></div>
-                
-                <ul>
-                    <course-component v-for="course in sun" :start="course.start" :end="course.end" :name="course.name"></course-component>
-                </ul>
-            </li>-->
-            <li class="events-group">
-                <div class="top-info"><span>Mon</span></div>
-                
-                <ul>
-                    <course-component v-for="course in mon" :start="course.start" :end="course.end" :name="course.name"></course-component>
-                </ul>
-            </li>
-
-            <li class="events-group">
-                <div class="top-info"><span>Tues</span></div>
-
-                <ul>
-                    <course-component v-for="course in tue" :start="course.start" :end="course.end" :name="course.name"></course-component>        
-                </ul>
-            </li>
-
-            <li class="events-group">
-                <div class="top-info"><span>Wed</span></div>
-
-                <ul>
-                    <course-component v-for="course in wed" :start="course.start" :end="course.end" :name="course.name"></course-component> 
-                </ul>
-            </li>
-
-            <li class="events-group">
-                <div class="top-info"><span>Thur</span></div>
-
-                <ul>
-                    <course-component v-for="course in thu" :start="course.start" :end="course.end" :name="course.name"></course-component> 
-                </ul>
-            </li>
-
-            <li class="events-group">
-                <div class="top-info"><span>Fri</span></div>
-
-                <ul>
-                    <course-component v-for= "course in fri" :start="course.start" :end="course.end" :name="course.name" ></course-component>
-                </ul>
-            </li>
-            
-            <!-- Saturday attempt !-->
-            <!--<li class="events-group">
-                <div class="top-info"><span>Sat</span></div>
-                <ul>
-                    <course-component v-for= "course in sat" :start="course.start" :end="course.end" :name="course.name" ></course-component>
-                </ul>
-            </li>-->
-            
-        </ul>
-    </div>
-
-
-    <div class="event-modal">
-        <header class="header">
-            <div class="content">
-                <span class="event-date"></span>
-                <h3 class="event-name"></h3>
-            </div>
-
-            <div class="header-bg"></div>
-        </header>
-
-        <div class="body">
-            <div class="event-info"></div>
-            <div class="body-bg"></div>
-        </div>
-
-        <a href="#0" class="close">Close</a>
-    </div>
-
-
-    </div> <!--.cd-schedule-->
-</div> <!-- .schedule -->
-
-<div class="cover-layer"></div>
+    <div class="cover-layer"></div>
 </div> <!-- #vue -->
-<script src="schedule-template/js/modernizr.js"></script>
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script> -->
-<script src="schedule-template/js/main.js"></script> <!-- Resource jQuery -->
 
+<script src="schedule-template/js/modernizr.js"></script>
+<script src="schedule-template/js/main.js"></script>
 <script src="myapp.js"></script>
 
 </body>
