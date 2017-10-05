@@ -24,7 +24,8 @@
         <div class="input-fields">
             <div v-for="(course, i) in courses">
                 <button class="add-course-button button" @click="add">+</button> 
-                <input type="text" class="input-field" v-model="course.name" @keyup.enter="add(i)" @keyup.delete="backspace(course.name, i)" placeholder="CPSC110"/>
+                <input type="text" class="input-field" placeholder="MATH 100"
+                    v-model="course.name" @keyup.enter="add(i)" @keyup.delete="backspace(course.name, i)" />
 
                 <button class="x-button" @click="remove(i)">x</button>
             </div>

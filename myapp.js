@@ -14,7 +14,7 @@ Vue.component('course-component', {
 
 Vue.component('schedule-component', {
   props: [
-    "sun", "mon", "tue", "wed", "thu", "fri", "sat"
+    'sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'
   ],
   template: `
   <div class="schedule">
@@ -113,6 +113,7 @@ Vue.component('schedule-component', {
     </div>`
 })
 
+// reformats one schedule to a format we can display easily
 function reformat(sched) {
   var days = [[],[],[],[],[],[],[]];
   for (var i=0; i < sched.length; i++) {
@@ -125,6 +126,7 @@ function reformat(sched) {
         var start = lecture.start;
         var end = lecture.end;
         var block = {name: courseName, start: start, end: end};
+
         //push block onto corresponding day in the array "days"
         days[dayStringToIndex(day)].push(block);
       }
@@ -154,8 +156,6 @@ function dayStringToIndex(day) {
   }
 }
 
-//const exampleResponse = [[{"MICB 201 101": [{"term": "1", "day": "Tue", "start": "8:00", "end": "9:30"}, {"term": "1", "day": "Thu", "start": "8:00", "end": "9:30"}]}, {"CPSC 320 101": [{"term": "1", "day": "Mon", "start": "14:00", "end": "15:00"}, {"term": "1", "day": "Wed", "start": "14:00", "end": "15:00"}, {"term": "1", "day": "Fri", "start": "14:00", "end": "15:00"}]}, {"LING 101 004": [{"term": "1", "day": "Mon", "start": "13:00", "end": "14:00"}, {"term": "1", "day": "Wed", "start": "13:00", "end": "14:00"}, {"term": "1", "day": "Fri", "start": "13:00", "end": "14:00"}]}, {"MATH 200 101": [{"term": "1", "day": "Mon", "start": "9:00", "end": "10:00"}, {"term": "1", "day": "Wed", "start": "9:00", "end": "10:00"}, {"term": "1", "day": "Fri", "start": "9:00", "end": "10:00"}]}], [{"MICB 201 101": [{"term": "1", "day": "Tue", "start": "8:00", "end": "9:30"}, {"term": "1", "day": "Thu", "start": "8:00", "end": "9:30"}]}, {"CPSC 320 101": [{"term": "1", "day": "Mon", "start": "14:00", "end": "15:00"}, {"term": "1", "day": "Wed", "start": "14:00", "end": "15:00"}, {"term": "1", "day": "Fri", "start": "14:00", "end": "15:00"}]}, {"LING 101 004": [{"term": "1", "day": "Mon", "start": "13:00", "end": "14:00"}, {"term": "1", "day": "Wed", "start": "13:00", "end": "14:00"}, {"term": "1", "day": "Fri", "start": "13:00", "end": "14:00"}]}, {"MATH 200 103": [{"term": "1", "day": "Mon", "start": "11:00", "end": "12:00"}, {"term": "1", "day": "Wed", "start": "11:00", "end": "12:00"}, {"term": "1", "day": "Fri", "start": "11:00", "end": "12:00"}]}], [{"MICB 201 101": [{"term": "1", "day": "Tue", "start": "8:00", "end": "9:30"}, {"term": "1", "day": "Thu", "start": "8:00", "end": "9:30"}]}, {"CPSC 320 101": [{"term": "1", "day": "Mon", "start": "14:00", "end": "15:00"}, {"term": "1", "day": "Wed", "start": "14:00", "end": "15:00"}, {"term": "1", "day": "Fri", "start": "14:00", "end": "15:00"}]}, {"LING 101 004": [{"term": "1", "day": "Mon", "start": "13:00", "end": "14:00"}, {"term": "1", "day": "Wed", "start": "13:00", "end": "14:00"}, {"term": "1", "day": "Fri", "start": "13:00", "end": "14:00"}]}, {"MATH 200 105": [{"term": "1", "day": "Tue", "start": "9:30", "end": "11:00"}, {"term": "1", "day": "Thu", "start": "9:30", "end": "11:00"}]}], [{"MICB 201 101": [{"term": "1", "day": "Tue", "start": "8:00", "end": "9:30"}, {"term": "1", "day": "Thu", "start": "8:00", "end": "9:30"}]}, {"CPSC 320 101": [{"term": "1", "day": "Mon", "start": "14:00", "end": "15:00"}, {"term": "1", "day": "Wed", "start": "14:00", "end": "15:00"}, {"term": "1", "day": "Fri", "start": "14:00", "end": "15:00"}]}, {"LING 101 004": [{"term": "1", "day": "Mon", "start": "13:00", "end": "14:00"}, {"term": "1", "day": "Wed", "start": "13:00", "end": "14:00"}, {"term": "1", "day": "Fri", "start": "13:00", "end": "14:00"}]}, {"MATH 200 107": [{"term": "1", "day": "Tue", "start": "15:30", "end": "17:00"}, {"term": "1", "day": "Thu", "start": "15:30", "end": "17:00"}]}], [{"MICB 201 101": [{"term": "1", "day": "Tue", "start": "8:00", "end": "9:30"}, {"term": "1", "day": "Thu", "start": "8:00", "end": "9:30"}]}, {"CPSC 320 101": [{"term": "1", "day": "Mon", "start": "14:00", "end": "15:00"}, {"term": "1", "day": "Wed", "start": "14:00", "end": "15:00"}, {"term": "1", "day": "Fri", "start": "14:00", "end": "15:00"}]}, {"LING 101 004": [{"term": "1", "day": "Mon", "start": "13:00", "end": "14:00"}, {"term": "1", "day": "Wed", "start": "13:00", "end": "14:00"}, {"term": "1", "day": "Fri", "start": "13:00", "end": "14:00"}]}, {"MATH 200 201": [{"term": "2", "day": "Mon", "start": "9:00", "end": "10:00"}, {"term": "2", "day": "Wed", "start": "9:00", "end": "10:00"}, {"term": "2", "day": "Fri", "start": "9:00", "end": "10:00"}]}], [{"MICB 201 101": [{"term": "1", "day": "Tue", "start": "8:00", "end": "9:30"}, {"term": "1", "day": "Thu", "start": "8:00", "end": "9:30"}]}, {"CPSC 320 101": [{"term": "1", "day": "Mon", "start": "14:00", "end": "15:00"}, {"term": "1", "day": "Wed", "start": "14:00", "end": "15:00"}, {"term": "1", "day": "Fri", "start": "14:00", "end": "15:00"}]}, {"LING 101 004": [{"term": "1", "day": "Mon", "start": "13:00", "end": "14:00"}, {"term": "1", "day": "Wed", "start": "13:00", "end": "14:00"}, {"term": "1", "day": "Fri", "start": "13:00", "end": "14:00"}]}, {"MATH 200 203": [{"term": "2", "day": "Tue", "start": "12:30", "end": "14:00"}, {"term": "2", "day": "Thu", "start": "12:30", "end": "14:00"}]}]];
-
 const exampleScheduleResponse = [
   {
     'MICB 201 101': [
@@ -173,11 +173,6 @@ const exampleScheduleResponse = [
   }
 ];
 
-const exampleMon = [
-  {name: "BIOL112", start: "8:00", end: "9:00"}, 
-  {name: "CHEM121", start: "13:00", end: "14:00"}
-]
-
 var vue = new Vue({
   el: '#vue',
   data: { 
@@ -187,10 +182,8 @@ var vue = new Vue({
   },
   methods: {
     add: function(index) {
-      //this.courses.push({name : ''});
       if (this.courses.length != MAX_COURSES) {
         this.courses.splice(index+1, 0, {name: ''});
-        //document.getElementById('first-field').nextSibling.focus();
       }
     },
     remove: function(index) {
@@ -214,7 +207,7 @@ var vue = new Vue({
       vue.schedules = [];
 
       $.ajax({
-        type: "GET",
+        type: 'GET',
         url: destUrl,
         success: function(response) {
           // response is an array of schedules
