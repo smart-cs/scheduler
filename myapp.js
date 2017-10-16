@@ -1,5 +1,5 @@
 const MAX_COURSES = 20;
-
+//document.getElementById("load").visible = false;
 Vue.component('course-component', {
   props: [
     'start', 'end', 'name'
@@ -189,7 +189,8 @@ var vue = new Vue({
   data: { 
     seen: true,
     schedules: [],
-    courses: [{name : ''}]
+    courses: [{name : ''}],
+    loading: false
   },
   methods: {
  
@@ -201,14 +202,17 @@ var vue = new Vue({
       if (coursename=='')
         this.remove(index);
     },
+ 
     generateSchedule: function() {
+      this.loading = true;
+      //document.getElementById("load").visible = true;
       var PROXY = "https://cors-anywhere.herokuapp.com/";
       var BASE_API = "phzi353gq7.execute-api.us-west-2.amazonaws.com/test";
       var RETURN_SCHEDULE = "/returnSchedule";
       var INPUT_COURSES = this.courses.filter(function(c) {
         return c.name.length != 0;
       }).map(function(c) {
-        return c.name;
+        return c.name.toUpperCase();
       }).join(",");
 
       var PARAMS = "?courses=" + INPUT_COURSES;
@@ -234,7 +238,9 @@ var vue = new Vue({
             setTimeout(function(){
               schedule_template.makeSchedule($);
             }, 1000)
-          })
+          });
+
+          vue.loading = false;
         },
         error: function(request, textStatus, errorThrown) {
           console.log(request);
@@ -242,6 +248,8 @@ var vue = new Vue({
           console.log(errorThrown);
         }
       });
+      
+      //document.getElementById("load").visible = false;
     },
     
     add: function(index) {
@@ -256,4 +264,4 @@ var vue = new Vue({
   mounted: function() {
 
   }
-});
+})
