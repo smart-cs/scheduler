@@ -192,11 +192,7 @@ var vue = new Vue({
     courses: [{name : ''}]
   },
   methods: {
-    add: function(index) {
-      if (this.courses.length != MAX_COURSES) {
-        this.courses.splice(index+1, 0, {name: ''});
-      }
-    },
+ 
     remove: function(index) {
       if (this.courses.length > 1)
         this.courses.splice(index, 1);
@@ -209,7 +205,13 @@ var vue = new Vue({
       var PROXY = "https://cors-anywhere.herokuapp.com/";
       var BASE_API = "phzi353gq7.execute-api.us-west-2.amazonaws.com/test";
       var RETURN_SCHEDULE = "/returnSchedule";
-      var PARAMS = "?courses=" + this.courses.map(function(c) {return c.name;}).join(",");
+      var INPUT_COURSES = this.courses.filter(function(c) {
+        return c.name.length != 0;
+      }).map(function(c) {
+        return c.name;
+      }).join(",");
+
+      var PARAMS = "?courses=" + INPUT_COURSES;
       var destUrl = PROXY + BASE_API + RETURN_SCHEDULE + PARAMS;
 
       console.log("Sending GET to " + destUrl);
@@ -240,8 +242,17 @@ var vue = new Vue({
           console.log(errorThrown);
         }
       });
+    },
+    
+    add: function(index) {
+      if (this.courses.length != MAX_COURSES) {
+        //this.courses.push({name: ''});
+        this.courses.splice(index+1, 0, {name: ''});
+        this.generateSchedule();
+      }
     }
   },
+  
   mounted: function() {
 
   }
