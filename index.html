@@ -21,16 +21,17 @@
             <!-- <div class="title filters">Choose your filters</div> !-->
         </div>
 
-        <div class="input-fields">
+        <div class="input-fields" id="fields">
             <div v-for="(course, i) in courses">
                 <button class="add-course-button button" @click="add">+</button> 
-                <input type="text" class="input-field" placeholder="MATH 100"
+                <input type="text" class="input-field"
                     v-model="course.name" @keyup.enter="add(i)"/>
 
                 <button class="x-button" @click="remove(i)">x</button>
             </div>
             <button class="generate-schedule button" @click="generateSchedule()">Generate</button>
         </div>
+        <div v-if="loading">LOADING</div>
     </div>
 
     <div>
