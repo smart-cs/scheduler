@@ -116,7 +116,7 @@ Main Components
 }
 
 .cd-schedule .events .events-group {
-  margin-bottom: 30px;
+  margin-bottom: 70px;
 }
 
 .cd-schedule .events .top-info {
@@ -216,7 +216,7 @@ Main Components
     margin-bottom: 0;
   }
   .cd-schedule .events .events-group > ul {
-    height: 950px;
+    height: 1300.09px;
     /* reset style */
     display: block;
     overflow: visible;
@@ -272,15 +272,20 @@ Main Components
   opacity: 0;
 }
 
+/* changed 
 .cd-schedule .event-name,
-.cd-schedule .event-date {
+.cd-schedule .event-date 
+to 
+.cd-schedule .event-name
+*/
+.cd-schedule .event-name {
   display: block;
   color: white;
   font-weight: bold;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+/* Not sure what this does */
 .cd-schedule .event-name {
   font-size: 0.3 rem;
 }
@@ -292,13 +297,17 @@ Main Components
   }
 }
 
+/* changed by commenting this out, not sure what this does */
+/*
 .cd-schedule .event-date {
-  /* they are not included in the the HTML but added using JavScript */
+   they are not included in the the HTML but added using JavScript 
   font-size: 1 rem;
   opacity: .7;
   line-height: 1.2;
   margin-bottom: .2em;
 }
+*/
+
 
 .cd-schedule .single-event[data-event="event-1"],
 .cd-schedule [data-event="event-1"] .header-bg {
@@ -342,6 +351,7 @@ Main Components
   z-index: 3;
   top: 0;
   right: 0;
+  /* Not sure what this height does */
   height: 100%;
   width: 100%;
   visibility: hidden;
@@ -361,6 +371,7 @@ Main Components
 
 .cd-schedule .event-modal .header {
   position: relative;
+  /* Not sure what this height does */
   height: 70px;
   /* vertically center its content */
   display: table;
@@ -379,6 +390,7 @@ Main Components
 .cd-schedule .event-modal .body {
   position: relative;
   width: 100%;
+  /* Not sure what this height does */
   /* 70px is the .header height */
   height: calc(100% - 70px);
 }
@@ -387,12 +399,14 @@ Main Components
   position: relative;
   z-index: 2;
   line-height: 1.4;
+  /* Not sure what this height does */
   height: 100%;
   overflow: hidden;
 }
 
 .cd-schedule .event-modal .event-info > div {
   overflow: auto;
+  /* Not sure what this height does */
   height: 100%;
   padding: 1.4em 5%;
 }
@@ -443,6 +457,7 @@ Main Components
   top: 50%;
   left: 50%;
   width: 2px;
+  /* Not sure what this height does */
   height: 22px;
   background: white;
   -webkit-backface-visibility: hidden;
@@ -461,6 +476,7 @@ Main Components
           transform: translateX(-50%) translateY(-50%) rotate(-45deg);
 }
 
+/* Not sure what this does */
 .cd-schedule .event-modal .event-date {
   display: none;
 }
@@ -533,12 +549,14 @@ Main Components
         -ms-transform: none;
             transform: none;
   }
+  /* Not sure what this does */
   .cd-schedule .event-modal .event-date {
     display: block;
   }
   .cd-schedule .event-modal .close, .cd-schedule .event-modal .event-info {
     opacity: 0;
   }
+  /* Changed height WOULD duplicate the schedules */
   .cd-schedule .event-modal .close {
     width: 40px;
     height: 40px;
@@ -546,6 +564,7 @@ Main Components
   }
   .cd-schedule .event-modal .close::after, .cd-schedule .event-modal .close::before {
     background: #222222;
+    /* Not sure what this height does */
     height: 16px;
   }
 }

@@ -3,7 +3,7 @@ body {
    
 }
 .title {
-    font-size: 290%;
+    font-size: 210%;
     color: black;
     margin-top: 40px;
     display: inline-block;
@@ -18,7 +18,7 @@ body {
     padding-left: 8%;
 }
 .header {
-    font-size: 500%;
+    font-size: 420%;
     color: white;
     position: absolute;
     padding-top: 1%;
@@ -84,8 +84,9 @@ body {
 
 .schedule {
     border: none;
+    /* This height doesn't do anything */
     height: 90%;
     width: 50%;
     display: inline-flex;
-    margin-bottom: 30%;
+    margin-bottom: 65%;
 }

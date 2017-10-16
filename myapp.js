@@ -40,6 +40,14 @@ Vue.component('schedule-component', {
                   <li><span>16:00</span></li>
                   <li><span>16:30</span></li>
                   <li><span>17:00</span></li>
+                  <li><span>17:30</span></li>
+                  <li><span>18:00</span></li>
+                  <li><span>18:30</span></li>
+                  <li><span>19:00</span></li>
+                  <li><span>19:30</span></li>
+                  <li><span>20:00</span></li>
+                  <li><span>20:30</span></li>
+                  <li><span>21:00</span></li>
               </ul>
           </div> 
 
@@ -112,6 +120,9 @@ Vue.component('schedule-component', {
       </div> 
     </div>`
 })
+
+
+
 
 // reformats one schedule to a format we can display easily
 function reformat(sched) {

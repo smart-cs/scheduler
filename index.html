@@ -14,18 +14,18 @@
 </head>
 <body>
 <div id="vue">
-    <p id="rectangle" class="header">Course Scheduler<p>
+    <p id="rectangle" class="header"> UBC Course Scheduler<p>
     <div class="input-courses">
         <div v-if="seen">
-            <div class="title">Enter your courses here</div>
-            <div class="title filters">Choose your filters</div>
+            <div class="title">Enter your courses here (e.g. CPSC 110)</div>
+            <!-- <div class="title filters">Choose your filters</div> !-->
         </div>
 
         <div class="input-fields">
             <div v-for="(course, i) in courses">
                 <button class="add-course-button button" @click="add">+</button> 
                 <input type="text" class="input-field" placeholder="MATH 100"
-                    v-model="course.name" @keyup.enter="add(i)" @keyup.delete="backspace(course.name, i)" />
+                    v-model="course.name" @keyup.enter="add(i)"/>
 
                 <button class="x-button" @click="remove(i)">x</button>
             </div>
