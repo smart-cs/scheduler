@@ -1,5 +1,5 @@
 const MAX_COURSES = 20;
-//document.getElementById("load").visible = false;
+
 Vue.component('course-component', {
   props: [
     'start', 'end', 'name'
@@ -9,7 +9,8 @@ Vue.component('course-component', {
       <a href="#0">
         <em class="event-name">{{name}}</em>
       </a>
-    </li>`
+    </li>
+  `
 })
 
 Vue.component('schedule-component', {
@@ -121,147 +122,49 @@ Vue.component('schedule-component', {
     </div>`
 })
 
-
-
-
-// reformats one schedule to a format we can display easily
-function reformat(sched) {
-  var days = [[],[],[],[],[],[],[]];
-  for (var i=0; i < sched.length; i++) {
-    var course = sched[i];
-    for (var [courseName, lectures] of Object.entries(course)) {
-      for (var j=0; j < lectures.length; j++) {
-        var lecture = lectures[j];
-        var term = lecture.term;
-        var day = lecture.day;
-        var start = lecture.start;
-        var end = lecture.end;
-        var block = {name: courseName, start: start, end: end};
-
-        //push block onto corresponding day in the array "days"
-        days[dayStringToIndex(day)].push(block);
-      }
-    }
-  }
-  return days;
-}
-
-function dayStringToIndex(day) {
-  switch(day) {
-    case "Sun":
-      return 0;
-    case "Mon":
-      return 1;
-    case "Tue":
-      return 2;
-    case "Wed":
-      return 3;
-    case "Thu":
-      return 4;
-    case "Fri":
-      return 5;
-    case "Sat":
-      return 6;
-    default:
-      throw day + ' is not a valid day!';
-  }
-}
-
-const exampleScheduleResponse = [
-  {
-    'MICB 201 101': [
-      {'term': '1', 'day': 'Tue', 'start': '8:00', 'end': '9:30'}, 
-      {'term': '1', 'day': 'Thu', 'start': '8:00', 'end': '9:30'},
-      {'term': '1', 'day': 'Tue', 'start': '11:00', 'end': '12:00'}
-    ]
-  },
-  {
-    'CPSC 320 101': [
-      {'term': '1', 'day': 'Mon', 'start': '14:00', 'end': '15:00'}, 
-      {'term': '1', 'day': 'Wed', 'start': '14:00', 'end': '15:00'}, 
-      {'term': '1', 'day': 'Fri', 'start': '14:00', 'end': '15:00'}
-    ]
-  }
-];
-
 var vue = new Vue({
   el: '#vue',
   data: { 
     seen: true,
     schedules: [],
-    courses: [{name : ''}],
+    inputCourses: [{name : ''}],
     loading: false
   },
   methods: {
- 
-    remove: function(index) {
-      if (this.courses.length > 1)
-        this.courses.splice(index, 1);
+    add: function(i) {
+      if (this.inputCourses.length != MAX_COURSES) {
+        this.inputCourses.splice(i+1, 0, {name: ''});
+      }
     },
-    backspace: function(coursename, index) {
-      if (coursename=='')
-        this.remove(index);
+    remove: function(i) {
+      if (this.inputCourses.length > 1) {
+        this.inputCourses.splice(i, 1);
+      }
     },
- 
+    backspace: function(coursename, i) {
+      if (coursename == '') {
+        this.remove(i);
+      }
+    },
     generateSchedule: function() {
       this.loading = true;
-      //document.getElementById("load").visible = true;
-      var PROXY = "https://cors-anywhere.herokuapp.com/";
-      var BASE_API = "phzi353gq7.execute-api.us-west-2.amazonaws.com/test";
-      var RETURN_SCHEDULE = "/returnSchedule";
-      var INPUT_COURSES = this.courses.filter(function(c) {
+      const inputCourses = this.inputCourses.filter(function(c) {
         return c.name.length != 0;
       }).map(function(c) {
         return c.name.toUpperCase();
-      }).join(",");
-
-      var PARAMS = "?courses=" + INPUT_COURSES;
-      var destUrl = PROXY + BASE_API + RETURN_SCHEDULE + PARAMS;
-
-      console.log("Sending GET to " + destUrl);
-
-      // clear out our previous schedules
-      vue.schedules = [];
-
-      $.ajax({
-        type: 'GET',
-        url: destUrl,
-        success: function(response) {
-          // response is an array of schedules
-          response.forEach(function(schedule) {
-            vue.schedules.push(reformat(schedule));
-          });
-          
-          // need to render the .cd-schedule elements first before we call makeSchedule
-          // TODO: find out if there's a better way to do this
-          $(function() {
-            setTimeout(function(){
-              schedule_template.makeSchedule($);
-            }, 1000)
-          });
-
-          vue.loading = false;
-        },
-        error: function(request, textStatus, errorThrown) {
-          console.log(request);
-          console.log(textStatus);
-          console.log(errorThrown);
-        }
       });
-      
-      //document.getElementById("load").visible = false;
-    },
-    
-    add: function(index) {
-      if (this.courses.length != MAX_COURSES) {
-        //this.courses.push({name: ''});
-        this.courses.splice(index+1, 0, {name: ''});
-        this.generateSchedule();
-      }
+      this.schedules = []
+      CreatorAPI.create(inputCourses, function() {
+        vue.schedules = CreatorAPI.schedules;
+        vue.loading = false;
+        // need to render the .cd-schedule elements first before we call makeSchedule
+        // TODO: find out if there's a better way to do this
+        $(function() {
+          setTimeout(function(){
+            schedule_template.makeSchedule($);
+          }, 1000);
+        });
+      });
     }
-  },
-  
-  mounted: function() {
-
   }
-})
+});

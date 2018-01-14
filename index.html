@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="schedule-template/css/style.css"> <!-- Resource style -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet">
 
-    <link rel="stylesheet" href="mystyle.css"> <!-- mystyle --> 
+    <link rel="stylesheet" href="main.css"> <!-- mystyle --> 
 </head>
 <body>
 <div id="vue">
@@ -22,7 +22,7 @@
         </div>
 
         <div class="input-fields" id="fields">
-            <div v-for="(course, i) in courses">
+            <div v-for="(course, i) in inputCourses">
                 <button class="add-course-button button" @click="add">+</button> 
                 <input type="text" class="input-field"
                     v-model="course.name" @keyup.enter="add(i)"/>
@@ -49,7 +49,8 @@
 
 <script src="schedule-template/js/modernizr.js"></script>
 <script src="schedule-template/js/main.js"></script>
-<script src="myapp.js"></script>
+<script src="creatorapi.js"></script>
+<script src="main.js"></script>
 
 </body>
 </html>
