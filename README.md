@@ -28,11 +28,16 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 ## Deployment Steps
 ```bash
-npm run build
-git checkout gh-pages
-rm -rf static index.html
-mv dist/* .
-sed -i '' 's/\/static/static/g' index.html # BSD sed
+npm run build && \
+git checkout gh-pages && \
+rm -rf static index.html && \
+mv dist/* . && \
+sed -i '' 's/\/static/static/g' index.html && \
+git add index.html static/
+
+# Add commit message
+git commit -m "Deploy"
+git push origin gh-pages
 ```
 
 ## Implementation
