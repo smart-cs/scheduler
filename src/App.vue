@@ -194,7 +194,7 @@ export default {
     getAutocomplete: function (prefix) {
       let self = this
       CreatorAPI.autocomplete(prefix, function () {
-        self.autocompleteItems = CreatorAPI.courses
+        self.autocompleteItems = CreatorAPI.courses.sort()
       })
     },
     checkAutocomplete: function (prefix) {
