@@ -9,18 +9,22 @@ export default {
   name: 'course-component',
   props: ['name', 'type', 'row', 'col', 'len'],
   computed: {
-    overlayStyle: function () {
+    overlayStyle: function() {
       const style = {
-        left: (parseInt(this.col) * 60).toString() + 'px',
-        top: (parseInt(this.row) * 15 - 8).toString() + 'px',
+        top: '63.5%',
+        left: '35.7%',
+        //left: (parseInt(this.col) * 60).toString() + 'px',
+        //top: (parseInt(this.row) * 15 - 8).toString() + 'px',
         height: (parseInt(this.len) * 15 - 1).toString() + 'px',
-        width: '59px',
-        fontSize: '8px',
+        width: '100px',
+        fontSize: '100%',
         backgroundColor: '#ADD8E6',
         position: 'absolute'
+
       }
+
       return style
-    }
+    },
   }
 }
 </script>
