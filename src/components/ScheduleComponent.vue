@@ -57,19 +57,19 @@ const TIMES = [
 export default {
   name: 'schedule-component',
   props: ['term', 'sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],
-  data: function() {
+  data: function () {
     return {
-      times: TIMES,
+      times: TIMES
     }
   },
   methods: {
-    timeBetween: function(start, end) {
+    timeBetween: function (start, end) {
       const s = moment(start.toString(), 'HH:mm')
       const e = moment(end.toString(), 'HH:mm')
       const diff = e.diff(s, 'minutes') / 30
       return diff
     },
-    timeFromStart: function(time) {
+    timeFromStart: function (time) {
       return this.timeBetween('08:00', time) + 1
     }
   },
