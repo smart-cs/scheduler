@@ -26,18 +26,9 @@ npm test
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
-## Deployment Steps
-```bash
-npm run build && \
-git checkout gh-pages && \
-rm -rf static index.html && \
-mv dist/* . && \
-sed -i '' 's/\/static/static/g' index.html && \
-git add index.html static/
-
-# Add commit message
-git commit -m "Deploy"
-git push origin gh-pages
+## Deployment
+```shell
+./deploy.sh
 ```
 
 ## Implementation
