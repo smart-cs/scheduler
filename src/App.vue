@@ -32,9 +32,8 @@ import moment from 'moment'
 
 const CreatorAPI = {
   // Use localhost for testing purposes
-  BASE: 'http://localhost:8080',
-
-  // BASE: 'https://sheltered-taiga-32349.herokuapp.com',
+  // BASE: 'http://localhost:8080',
+  BASE: 'https://schedulecreator.herokuapp.com',
   SCHEDULES_API: '/schedules',
   AUTOCOMPLETE_API: '/autocomplete',
   schedules: [],
