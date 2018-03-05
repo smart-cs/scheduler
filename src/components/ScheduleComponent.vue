@@ -94,7 +94,6 @@ export default {
   display: flex;
   flex-direction: column;
   min-width: 100px;
-  min-height: 800px;
 }
 
 .day {
@@ -102,7 +101,7 @@ export default {
   flex-shrink: 1;
   flex-basis: 0;
 
-  min-height: 15px;
+  min-height: 20px;
   color: #5F5F5F;
   background-color: transparentize(white, 0.30);
   box-shadow: -1px -1px #E2E1E1,
