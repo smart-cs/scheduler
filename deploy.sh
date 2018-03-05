@@ -26,6 +26,6 @@ fi
 
 git add index.html static/
 git commit -m "Deploy page from ${MASTER_COMMIT_SHA}"
-git push origin gh-page
+git push origin gh-pages
 
 git checkout ${INITIAL_BRANCH}
