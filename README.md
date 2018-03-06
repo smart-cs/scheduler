@@ -1,4 +1,4 @@
-# schedulecreator
+# scheduler
 
 > A website that offers UBC students all the possible schedules that can be made, given the courses they wish to take.
 
@@ -35,5 +35,5 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 ```
 
 ## Implementation
-Backend source code can be found [here](https://github.com/nickwu241/schedulecreator-backend).
+Backend source code can be found [here](https://github.com/nickwu241/scheduler-backend).
 
