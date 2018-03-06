@@ -13,7 +13,7 @@ MASTER_COMMIT_SHA="$(git rev-parse --short HEAD)"
 npm run build
 
 # Checkout to gh-pages for adding newly built files
-git checkout gh-pages || git checkout -b gh-pages
+git checkout gh-pages || git fetch origin gh-pages:gh-pages && git checkout gh-pages
 rm -rf static index.html
 mv dist/* .
 sed -i '' 's/\/static/static/g' index.html
