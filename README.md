@@ -35,5 +35,5 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 ```
 
 ## Implementation
-Backend source code can be found [here](https://github.com/nickwu241/scheduler-backend).
+Backend source code can be found [here](https://github.com/smart-cs/scheduler-backend).
 
