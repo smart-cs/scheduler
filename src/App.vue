@@ -43,7 +43,6 @@
 import ScheduleComponent from './components/ScheduleComponent'
 import Autocomplete from 'v-autocomplete'
 import moment from 'moment'
-import VueMq from 'vue-mq'
 
 const CreatorAPI = {
   // Use localhost for testing purposes
@@ -53,7 +52,7 @@ const CreatorAPI = {
   AUTOCOMPLETE_API: '/autocomplete',
   schedules: [],
   courses: [],
-  dayStrToIndex: function(day) {
+  dayStrToIndex: function (day) {
     switch (day) {
       case 'Sun':
         return 0
@@ -73,7 +72,7 @@ const CreatorAPI = {
         throw Error(day + ' is not a valid day!')
     }
   },
-  intTimeToStr: function(time) {
+  intTimeToStr: function (time) {
     const timeStr = time.toString()
     const mid = timeStr.length - 2
     const timeFmted = moment({
@@ -82,7 +81,7 @@ const CreatorAPI = {
     }).format('HH:mm')
     return timeFmted
   },
-  formatSchedule: function(schedule) {
+  formatSchedule: function (schedule) {
     let days = [
       [[], [], [], [], [], [], []],
       [[], [], [], [], [], [], []]
@@ -119,23 +118,23 @@ const CreatorAPI = {
     }
     return days
   },
-  create: function(courses, callback) {
+  create: function (courses, callback) {
     const coursesParam = courses.join(',')
     this.schedules = []
     fetch(this.BASE + this.SCHEDULES_API + '?courses=' + coursesParam, {
       method: 'GET'
     }).then(r => r.json())
-      .then(function(r) {
+      .then(function (r) {
         const schedules = r.body
         CreatorAPI.schedules = schedules.map(s => CreatorAPI.formatSchedule(s))
         callback.call()
       })
   },
-  autocomplete: function(prefix, callback) {
+  autocomplete: function (prefix, callback) {
     fetch(this.BASE + this.AUTOCOMPLETE_API + '?text=' + prefix, {
       method: 'GET'
     }).then(r => r.json())
-      .then(function(r) {
+      .then(function (r) {
         CreatorAPI.courses = r.body
         callback.call()
       })
@@ -156,7 +155,7 @@ export default {
   // mounted: function () {
   //   this.generateSchedule()
   // },
-  data: function() {
+  data: function () {
     return {
       MAX_INPUT_COURSES: 20,
       SCHEDULES_PER_PAGE: 100,
@@ -168,7 +167,7 @@ export default {
     }
   },
   methods: {
-    addCourse: function(course) {
+    addCourse: function (course) {
       if (this.inputCourses.length === this.MAX_INPUT_COURSES) {
         // TODO: Output max courses message
         return
@@ -180,22 +179,22 @@ export default {
       this.inputCourses.push({ 'name': course })
       this.generateSchedule()
     },
-    removeCourseByIndex: function(i) {
+    removeCourseByIndex: function (i) {
       this.inputCourses.splice(i, 1)
       this.generateSchedule()
     },
-    getAutocomplete: function(prefix) {
+    getAutocomplete: function (prefix) {
       let self = this
-      CreatorAPI.autocomplete(prefix, function() {
+      CreatorAPI.autocomplete(prefix, function () {
         self.autocompleteItems = CreatorAPI.courses.sort()
       })
     },
-    checkAutocomplete: function(prefix) {
+    checkAutocomplete: function (prefix) {
       if (!prefix) {
         this.autocompleteItems = []
       }
     },
-    generateSchedule: function() {
+    generateSchedule: function () {
       if (this.inputCourses.length === 0) {
         this.schedules = []
         return
@@ -204,7 +203,7 @@ export default {
       const upperInputCourses = this.inputCourses.map(e => e.name.toUpperCase())
       this.schedules = []
       let self = this
-      CreatorAPI.create(upperInputCourses, function() {
+      CreatorAPI.create(upperInputCourses, function () {
         self.schedules = CreatorAPI.schedules
         self.loading = false
       })
@@ -253,8 +252,6 @@ input-width = 400px
 
 .instruction-font
 
-
-
 .v-autocomplete
   .v-autocomplete-input-group
     .v-autocomplete-input
@@ -296,4 +293,3 @@ input-width = 400px
         font-family sans-serif
 
 </style>
-
