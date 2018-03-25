@@ -1,14 +1,28 @@
 <template>
   <div id="app">
-    <h1>UBC Course Schedule Creator</h1>
+    <h2>UBC Course Schedule Creator</h2>
     <div>
-      <u>Selected Courses</u>
-      <div v-for="(course, i) in inputCourses" :key="course.id">
-        {{ course.name }}
-        <button class="remove-course-button" @click="removeCourseByIndex(i)">X</button>
+      <h3>Selected Courses</h3>
+      <div class="wrapper centerme">
+        <span class="wrapper centerme">
+          <button v-for="(course, i) in inputCourses" :key="course.id" type="button" class="btn btn-info remove-course-button btn-sm btn-round" @click="removeCourseByIndex(i)"> {{ course.name }} &nbsp; &nbsp;x </button>
+        </span>
       </div>
-      <h4>Enter your courses here (e.g. CPSC 110)</h4>
-      <autocomplete :min-len="1" :items="autocompleteItems.slice(0, 7)" :auto-select-one-item="false" @update-items="getAutocomplete" @input="checkAutocomplete" @item-selected="addCourse" />
+      <div class="margin-bottom-px">
+        <!-- <h5>Enter your courses here (e.g. CPSC 110)</h5> -->
+      </div>
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <label>
+          <input type="radio" name="options" id="option1" autocomplete="off"> Term 1
+        </label>
+        <label>
+          <input type="radio" name="options" id="option2" autocomplete="off"> Term 2
+        </label>
+        <label>
+          <input type="radio" name="options" id="option3" autocomplete="off" checked> Both
+        </label>
+      </div>
+      <autocomplete :min-len="1" :items="autocompleteItems.slice(0, 7)" :auto-select-one-item="false" @update-items="getAutocomplete" @input="checkAutocomplete" placeholder="Enter a course here (e.g. CPSC 110)" @item-selected="addCourse" />
     </div>
     <div v-if="loading">Loading...</div>
     <div>
@@ -29,6 +43,7 @@
 import ScheduleComponent from './components/ScheduleComponent'
 import Autocomplete from 'v-autocomplete'
 import moment from 'moment'
+import VueMq from 'vue-mq'
 
 const CreatorAPI = {
   // Use localhost for testing purposes
@@ -38,7 +53,7 @@ const CreatorAPI = {
   AUTOCOMPLETE_API: '/autocomplete',
   schedules: [],
   courses: [],
-  dayStrToIndex: function (day) {
+  dayStrToIndex: function(day) {
     switch (day) {
       case 'Sun':
         return 0
@@ -58,7 +73,7 @@ const CreatorAPI = {
         throw Error(day + ' is not a valid day!')
     }
   },
-  intTimeToStr: function (time) {
+  intTimeToStr: function(time) {
     const timeStr = time.toString()
     const mid = timeStr.length - 2
     const timeFmted = moment({
@@ -67,7 +82,7 @@ const CreatorAPI = {
     }).format('HH:mm')
     return timeFmted
   },
-  formatSchedule: function (schedule) {
+  formatSchedule: function(schedule) {
     let days = [
       [[], [], [], [], [], [], []],
       [[], [], [], [], [], [], []]
@@ -104,23 +119,23 @@ const CreatorAPI = {
     }
     return days
   },
-  create: function (courses, callback) {
+  create: function(courses, callback) {
     const coursesParam = courses.join(',')
     this.schedules = []
     fetch(this.BASE + this.SCHEDULES_API + '?courses=' + coursesParam, {
       method: 'GET'
     }).then(r => r.json())
-      .then(function (r) {
+      .then(function(r) {
         const schedules = r.body
         CreatorAPI.schedules = schedules.map(s => CreatorAPI.formatSchedule(s))
         callback.call()
       })
   },
-  autocomplete: function (prefix, callback) {
+  autocomplete: function(prefix, callback) {
     fetch(this.BASE + this.AUTOCOMPLETE_API + '?text=' + prefix, {
       method: 'GET'
     }).then(r => r.json())
-      .then(function (r) {
+      .then(function(r) {
         CreatorAPI.courses = r.body
         callback.call()
       })
@@ -141,7 +156,7 @@ export default {
   // mounted: function () {
   //   this.generateSchedule()
   // },
-  data: function () {
+  data: function() {
     return {
       MAX_INPUT_COURSES: 20,
       SCHEDULES_PER_PAGE: 100,
@@ -153,7 +168,7 @@ export default {
     }
   },
   methods: {
-    addCourse: function (course) {
+    addCourse: function(course) {
       if (this.inputCourses.length === this.MAX_INPUT_COURSES) {
         // TODO: Output max courses message
         return
@@ -165,22 +180,22 @@ export default {
       this.inputCourses.push({ 'name': course })
       this.generateSchedule()
     },
-    removeCourseByIndex: function (i) {
+    removeCourseByIndex: function(i) {
       this.inputCourses.splice(i, 1)
       this.generateSchedule()
     },
-    getAutocomplete: function (prefix) {
+    getAutocomplete: function(prefix) {
       let self = this
-      CreatorAPI.autocomplete(prefix, function () {
+      CreatorAPI.autocomplete(prefix, function() {
         self.autocompleteItems = CreatorAPI.courses.sort()
       })
     },
-    checkAutocomplete: function (prefix) {
+    checkAutocomplete: function(prefix) {
       if (!prefix) {
         this.autocompleteItems = []
       }
     },
-    generateSchedule: function () {
+    generateSchedule: function() {
       if (this.inputCourses.length === 0) {
         this.schedules = []
         return
@@ -189,16 +204,23 @@ export default {
       const upperInputCourses = this.inputCourses.map(e => e.name.toUpperCase())
       this.schedules = []
       let self = this
-      CreatorAPI.create(upperInputCourses, function () {
+      CreatorAPI.create(upperInputCourses, function() {
         self.schedules = CreatorAPI.schedules
         self.loading = false
       })
+    }
+  },
+  props: {
+    placeholder: {
+      type: String,
+      default: 'Enter a course here (e.g. CPSC 110)'
     }
   }
 }
 </script>
 
 <style lang="stylus">
+@import "assets/css/paper-kit.css"
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -207,10 +229,31 @@ export default {
   color: #2c3e50;
 }
 
-input-width = 200px
+input-width = 400px
+.centerme
+  text-align: center;
+
+.wrapper
+  display: grid;
+  grid-template-columns: repeat( 6, minmax(100px, 1fr) );
+  grid-template-rows: 30px 30px;
+  grid-column-gap: 8px;
+  grid-row-gap: 0.7em;
+  margin-top 16px;
+  margin-left 200px;
+  margin-bottom 40px;
 
 .remove-course-button
-  border-radius 100%
+  border: none;
+  outline: none;
+  display: inline-block;
+
+.margin-bottom-px
+  margin-bottom: 2px;
+
+.instruction-font
+
+
 
 .v-autocomplete
   .v-autocomplete-input-group
@@ -253,3 +296,4 @@ input-width = 200px
         font-family sans-serif
 
 </style>
+
