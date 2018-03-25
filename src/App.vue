@@ -8,18 +8,15 @@
           <button v-for="(course, i) in inputCourses" :key="course.id" type="button" class="btn btn-info remove-course-button btn-sm btn-round" @click="removeCourseByIndex(i)"> {{ course.name }} &nbsp; &nbsp;x </button>
         </span>
       </div>
-      <div class="margin-bottom-px">
-        <!-- <h5>Enter your courses here (e.g. CPSC 110)</h5> -->
-      </div>
       <div class="btn-group btn-group-toggle" data-toggle="buttons">
         <label>
-          <input type="radio" name="options" id="option1" autocomplete="off"> Term 1
+          <input type="radio" name="options" id="option1" value="1" v-model="termPicked"> Term 1
         </label>
         <label>
-          <input type="radio" name="options" id="option2" autocomplete="off"> Term 2
+          <input type="radio" name="options" id="option2" value="2" v-model="termPicked"> Term 2
         </label>
         <label>
-          <input type="radio" name="options" id="option3" autocomplete="off" checked> Both
+          <input type="radio" name="options" id="option3" value="1-2" v-model="termPicked"> Both
         </label>
       </div>
       <autocomplete :min-len="1" :items="autocompleteItems.slice(0, 7)" :auto-select-one-item="false" @update-items="getAutocomplete" @input="checkAutocomplete" placeholder="Enter a course here (e.g. CPSC 110)" @item-selected="addCourse" />
@@ -31,8 +28,8 @@
       </h4>
       <div v-for="(schedule, i) in schedules.slice(0, 100)" :key="schedule.id">
         <h3>Schedule {{ i + 1}}</h3>
-        <schedule-component :term="1" :sun="schedule[0][0]" :mon="schedule[0][1]" :tue="schedule[0][2]" :wed="schedule[0][3]" :thu="schedule[0][4]" :fri="schedule[0][5]" :sat="schedule[0][6]" />
-        <schedule-component :term="2" :sun="schedule[1][0]" :mon="schedule[1][1]" :tue="schedule[1][2]" :wed="schedule[1][3]" :thu="schedule[1][4]" :fri="schedule[1][5]" :sat="schedule[1][6]" />
+        <schedule-component v-if="showTerm1" :term="1" :sun="schedule[0][0]" :mon="schedule[0][1]" :tue="schedule[0][2]" :wed="schedule[0][3]" :thu="schedule[0][4]" :fri="schedule[0][5]" :sat="schedule[0][6]" />
+        <schedule-component v-if="showTerm2" :term="2" :sun="schedule[1][0]" :mon="schedule[1][1]" :tue="schedule[1][2]" :wed="schedule[1][3]" :thu="schedule[1][4]" :fri="schedule[1][5]" :sat="schedule[1][6]" />
       </div>
       <p v-if="schedules.length > SCHEDULES_PER_PAGE">Only showing first {{ SCHEDULES_PER_PAGE }} schedules...</p>
     </div>
@@ -118,10 +115,11 @@ const CreatorAPI = {
     }
     return days
   },
-  create: function (courses, callback) {
+  create: function (courses, term, callback) {
     const coursesParam = courses.join(',')
     this.schedules = []
-    fetch(this.BASE + this.SCHEDULES_API + '?courses=' + coursesParam, {
+    const url = `${this.BASE + this.SCHEDULES_API}?courses=${coursesParam}&term=${term}`
+    fetch(url, {
       method: 'GET'
     }).then(r => r.json())
       .then(function (r) {
@@ -131,7 +129,8 @@ const CreatorAPI = {
       })
   },
   autocomplete: function (prefix, callback) {
-    fetch(this.BASE + this.AUTOCOMPLETE_API + '?text=' + prefix, {
+    const url = `${this.BASE + this.AUTOCOMPLETE_API}?text=${prefix}`
+    fetch(url, {
       method: 'GET'
     }).then(r => r.json())
       .then(function (r) {
@@ -141,7 +140,7 @@ const CreatorAPI = {
   }
 }
 
-// const DEFAULT_INPUT_COURSES = [{name: 'CPSC 121'}, {name: 'CPEN 221'}, {name: 'LING 101'}, {name: 'MATH 100'}, {name: 'MATH 101'}]
+// const DEFAULT_INPUT_COURSES = [{ name: 'CPSC 121' }, { name: 'CPEN 221' }, { name: 'LING 101' }, { name: 'MATH 100' }, { name: 'MATH 101' }]
 // const DEFAULT_INPUT_COURSES = [{name: 'MATH 101'}]
 const DEFAULT_INPUT_COURSES = []
 
@@ -163,7 +162,23 @@ export default {
       inputCourses: DEFAULT_INPUT_COURSES,
       autocompleteItems: [],
       loading: false,
-      schedules: []
+      schedules: [],
+      termPicked: '1-2'
+    }
+  },
+  computed: {
+    showTerm1: function () {
+      return this.termPicked === '1' || this.termPicked === '1-2'
+    },
+    showTerm2: function () {
+      return this.termPicked === '2' || this.termPicked === '1-2'
+    }
+  },
+  watch: {
+    termPicked: function (val) {
+      if (this.inputCourses.length > 0) {
+        this.generateSchedule()
+      }
     }
   },
   methods: {
@@ -203,7 +218,7 @@ export default {
       const upperInputCourses = this.inputCourses.map(e => e.name.toUpperCase())
       this.schedules = []
       let self = this
-      CreatorAPI.create(upperInputCourses, function () {
+      CreatorAPI.create(upperInputCourses, this.termPicked, function () {
         self.schedules = CreatorAPI.schedules
         self.loading = false
       })
