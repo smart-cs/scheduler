@@ -14,7 +14,7 @@ export default {
         left: (parseInt(this.col) * 100).toString() + 'px',
         top: (parseInt(this.row) * 20 - 16).toString() + 'px',
         height: (parseInt(this.len) * 20 - 1).toString() + 'px',
-        width: '100px',
+        width: '95px',
         fontSize: '100%',
         backgroundColor: '#ADD8E6',
         position: 'absolute'
