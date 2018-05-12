@@ -3,7 +3,7 @@
     <h2>UBC Course Schedule Creator</h2>
     <div>
       <h3>Selected Courses</h3>
-      <div class="wrapper centerme">
+      <div v-if="inputCourses.length > 0" class="wrapper centerme">
         <span class="wrapper centerme">
           <button v-for="(course, i) in inputCourses" :key="course.id" type="button" class="btn btn-info remove-course-button btn-sm btn-round" @click="removeCourseByIndex(i)"> {{ course.name }} &nbsp; &nbsp;x </button>
         </span>
