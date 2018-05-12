@@ -7,13 +7,16 @@ $(hash npm >/dev/null && hash git >/dev/null) || echo 'Make sure npm and git are
 # Get our current branch so we can come back to it
 INITIAL_BRANCH="$(git branch | grep \* | cut -d ' ' -f2)"
 
+# Fetch the latest changes
+git fetch origin
+
 # Checkout to master and build
-git checkout master
+git checkout master && git pull origin master
 MASTER_COMMIT_SHA="$(git rev-parse --short HEAD)"
 npm run build
 
 # Checkout to gh-pages for adding newly built files
-git checkout gh-pages || git fetch origin gh-pages:gh-pages && git checkout gh-pages
+git checkout gh-pages && git pull origin gh-pages
 rm -rf static index.html
 mv dist/* .
 sed -i '' 's/\/static/static/g' index.html
