@@ -49,7 +49,7 @@ const CreatorAPI = {
   AUTOCOMPLETE_API: '/autocomplete',
   schedules: [],
   courses: [],
-  dayStrToIndex: function(day) {
+  dayStrToIndex: function (day) {
     switch (day) {
       case 'Sun':
         return 0
@@ -69,7 +69,7 @@ const CreatorAPI = {
         throw Error(day + ' is not a valid day!')
     }
   },
-  intTimeToStr: function(time) {
+  intTimeToStr: function (time) {
     const timeStr = time.toString()
     const mid = timeStr.length - 2
     const timeFmted = moment({
@@ -78,7 +78,7 @@ const CreatorAPI = {
     }).format('HH:mm')
     return timeFmted
   },
-  formatSchedule: function(schedule) {
+  formatSchedule: function (schedule) {
     let days = [
       [[], [], [], [], [], [], []],
       [[], [], [], [], [], [], []]
@@ -115,25 +115,25 @@ const CreatorAPI = {
     }
     return days
   },
-  create: function(courses, term, callback) {
+  create: function (courses, term, callback) {
     const coursesParam = courses.join(',')
     this.schedules = []
     const url = `${this.BASE + this.SCHEDULES_API}?courses=${coursesParam}&term=${term}`
     fetch(url, {
       method: 'GET'
     }).then(r => r.json())
-      .then(function(r) {
+      .then(function (r) {
         const schedules = r.body
         CreatorAPI.schedules = schedules.map(s => CreatorAPI.formatSchedule(s))
         callback.call()
       })
   },
-  autocomplete: function(prefix, callback) {
+  autocomplete: function (prefix, callback) {
     const url = `${this.BASE + this.AUTOCOMPLETE_API}?text=${prefix}`
     fetch(url, {
       method: 'GET'
     }).then(r => r.json())
-      .then(function(r) {
+      .then(function (r) {
         CreatorAPI.courses = r.body
         callback.call()
       })
@@ -154,7 +154,7 @@ export default {
   // mounted: function() {
   //  this.generateSchedule()
   // },
-  data: function() {
+  data: function () {
     return {
       MAX_INPUT_COURSES: 20,
       SCHEDULES_PER_PAGE: 100,
@@ -168,35 +168,34 @@ export default {
     }
   },
   computed: {
-    showTerm1: function() {
+    showTerm1: function () {
       return this.termPicked === '1' || this.termPicked === '1-2'
     },
-    showTerm2: function() {
+    showTerm2: function () {
       return this.termPicked === '2' || this.termPicked === '1-2'
     }
   },
   watch: {
-    termPicked: function(val) {
+    termPicked: function (val) {
       if (this.inputCourses.length > 0) {
         this.generateSchedule()
       }
     },
-    loading: function(val) {
+    loading: function (val) {
       console.log(val)
       if (val) {
         this.progressBarInterval = setInterval(this.runProgressBar, 1000)
-      }
-      else {
+      } else {
         clearInterval(this.progressBarInterval)
       }
     }
   },
   methods: {
-    runProgressBar: function() {
+    runProgressBar: function () {
       NProgress.set(8.0)
       NProgress.done()
     },
-    addCourse: function(course) {
+    addCourse: function (course) {
       if (this.inputCourses.length === this.MAX_INPUT_COURSES) {
         // TODO: Output max courses message
         return
@@ -208,22 +207,22 @@ export default {
       this.inputCourses.push({ 'name': course })
       this.generateSchedule()
     },
-    removeCourseByIndex: function(i) {
+    removeCourseByIndex: function (i) {
       this.inputCourses.splice(i, 1)
       this.generateSchedule()
     },
-    getAutocomplete: function(prefix) {
+    getAutocomplete: function (prefix) {
       let self = this
-      CreatorAPI.autocomplete(prefix, function() {
+      CreatorAPI.autocomplete(prefix, function () {
         self.autocompleteItems = CreatorAPI.courses.sort()
       })
     },
-    checkAutocomplete: function(prefix) {
+    checkAutocomplete: function (prefix) {
       if (!prefix) {
         this.autocompleteItems = []
       }
     },
-    generateSchedule: function() {
+    generateSchedule: function () {
       if (this.inputCourses.length === 0) {
         this.schedules = []
         return
@@ -232,10 +231,10 @@ export default {
       const upperInputCourses = this.inputCourses.map(e => e.name.toUpperCase())
       this.schedules = []
       let self = this
-      CreatorAPI.create(upperInputCourses, this.termPicked, function() {
+      CreatorAPI.create(upperInputCourses, this.termPicked, function () {
         self.schedules = CreatorAPI.schedules
         console.debug('Schedules successfully retrieved:', self.schedules)
-        self.$nextTick(function() {
+        self.$nextTick(function () {
           self.loading = false
         })
       })
