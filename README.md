@@ -2,8 +2,7 @@
 
 > A website that offers UBC students all the possible schedules that can be made, given the courses they wish to take.
 
-
-<a href="https://cl.ly/1T1x0I1Z3d2F" target="_blank"><img src="https://dr5mo5s7lqrtc.cloudfront.net/items/1i0C3R1H2w0p442V0q32/Screen%20Recording%202018-03-04%20at%2005.50%20PM.gif" style="display: block;height: auto;width: 100%;"/></a>
+![Demo](demo/demo.gif)
 
 ## Build Setup
 
